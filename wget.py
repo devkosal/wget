@@ -435,6 +435,20 @@ def bar_adaptive(current, total, width=80):
 
     return output
 
+
+def bar_mb(current, total, width=80):
+    """
+    # https://stackoverflow.com/questions/73029775/how-to-show-file-size-in-mb-in-the-wget-module
+    # custom bar function:
+    # '/1024/1024' to convert Byte to MB
+    # 'round' is a python built-in function that rounds numbers. first argument is
+    #     number itself and second argument is The number of decimals to be considered
+    #     while rounding, default is 0. If 'round' function don't be used, result can
+    #     be something like: 41.625579834
+    # at end, I added ' MB' to be added in result.
+    """
+    return bar_adaptive(round(current/1024/1024, 2), round(total/1024/1024, 2), width) + ' MB'
+
 # --/ console helpers
 
 
@@ -486,7 +500,7 @@ def detect_filename(url=None, out=None, headers=None, default="download.wget"):
         names["headers"] = filename_from_headers(headers) or ''
     return names["out"] or names["headers"] or names["url"] or default
 
-def download(url, out=None, bar=bar_adaptive):
+def download(url, out=None, bar=bar_mb, temp_dir="."):
     """High level function, which downloads URL into tmp file in current
     directory and then renames it to filename autodetected from either URL
     or HTTP headers.
@@ -503,7 +517,7 @@ def download(url, out=None, bar=bar_adaptive):
 
     # get filename for temp file in current directory
     prefix = detect_filename(url, out)
-    (fd, tmpfile) = tempfile.mkstemp(".tmp", prefix=prefix, dir=".")
+    (fd, tmpfile) = tempfile.mkstemp(".tmp", prefix=prefix, dir=temp_dir)
     os.close(fd)
     os.unlink(tmpfile)
 
