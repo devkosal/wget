@@ -111,10 +111,10 @@ ChangeLog
 Release Checklist
 =================
 
-| [ ] update version in wget.py
-| [x] update description in setup.py
-| [ ] python setup.py check -mrs
-| [ ] python setup.py sdist upload
+- [ ] update version in wget.py
+- [x] update description in setup.py
+- [ ] python setup.py check -mrs
+- [ ] python setup.py sdist upload
 | [ ] tag hg version
 
 -- 
