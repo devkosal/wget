@@ -500,13 +500,14 @@ def detect_filename(url=None, out=None, headers=None, default="download.wget"):
         names["headers"] = filename_from_headers(headers) or ''
     return names["out"] or names["headers"] or names["url"] or default
 
-def download(url, out=None, bar=bar_mb, temp_dir="."):
+def download(url, out=None, bar=bar_mb, tmp_dir="."):
     """High level function, which downloads URL into tmp file in current
     directory and then renames it to filename autodetected from either URL
     or HTTP headers.
 
     :param bar: function to track download progress (visualize etc.)
     :param out: output filename or directory
+    :param tmp_dir: directory where tempfiles will be stored
     :return:    filename where URL is downloaded to
     """
     # detect of out is a directory
