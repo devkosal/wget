@@ -7,7 +7,7 @@ Changes made:
 
 To install this specific version, run:
 
-pip install git+https://github.com/devkosal/wget
+`pip install git+https://github.com/devkosal/wget`
 
 
 Usage
