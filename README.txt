@@ -5,9 +5,9 @@ Changes made:
 - See the progress in megabytes with the new default bar `br_mb` courtesy of stackoverflow.
 - Allow setting a tempdir as an option where temporary files are stored.
 
-To install run:
+To install this specific version, run:
 
-`pip install git+https://github.com/devkosal/wget`
+pip install git+https://github.com/devkosal/wget
 
 
 Usage
