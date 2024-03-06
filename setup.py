@@ -33,5 +33,5 @@ setup(
 
     py_modules=['wget'],
 
-    long_description=open('README.txt').read(),
+    long_description=open('README.md').read(),
 )
