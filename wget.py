@@ -456,7 +456,7 @@ __current_size = 0  # global state variable, which exists solely as a
                     # workaround against Python 3.3.0 regression
                     # http://bugs.python.org/issue16409
                     # fixed in Python 3.3.1
-def callback_progress(blocks, block_size, total_size, bar_function):
+def callback_progress(blocks, block_size, total_size, bar_function, progress_callback=None):
     """callback function for urlretrieve that is called when connection is
     created and when once for each block
 
@@ -483,6 +483,8 @@ def callback_progress(blocks, block_size, total_size, bar_function):
     else:
         current_size = min(blocks*block_size, total_size)
     progress = bar_function(current_size, total_size, width)
+    if progress_callback:
+        progress_callback(current_size, total_size)
     if progress:
         sys.stdout.write("\r" + progress)
 
@@ -500,7 +502,7 @@ def detect_filename(url=None, out=None, headers=None, default="download.wget"):
         names["headers"] = filename_from_headers(headers) or ''
     return names["out"] or names["headers"] or names["url"] or default
 
-def download(url, out=None, bar=bar_mb, tmp_dir="."):
+def download(url, out=None, bar=bar_mb, tmp_dir=".", progress_callback=None):
     """High level function, which downloads URL into tmp file in current
     directory and then renames it to filename autodetected from either URL
     or HTTP headers.
@@ -525,7 +527,7 @@ def download(url, out=None, bar=bar_mb, tmp_dir="."):
     # set progress monitoring callback
     def callback_charged(blocks, block_size, total_size):
         # 'closure' to set bar drawing function in callback
-        callback_progress(blocks, block_size, total_size, bar_function=bar)
+        callback_progress(blocks, block_size, total_size, bar_function=bar, progress_callback=progress_callback)
     if bar:
         callback = callback_charged
     else:
